@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script>
+            function video_request(){    
+                formdata = new FormData()
+                formdata.append("json", JSON.stringify({"link": document.getElementById("input").value}))
+                response = fetch(`/generate_video`, {"method":"POST", "body":formdata})
+                console.log("ok4")
+                response.then(async function(response2){
+                    console.log("Ok3")
+                    if (response2.status == 405){
+                        console.log("Ok2")
+                    }else{
+                        console.log("Ok1")
+                        ab = await response2.text()
+                        window.location.href="/video"
+                    }
+                })
+            }
+        </script>
+        Type your video link to watch it!<br>
+        <input type="text" id="input"> <br>
+        <button onclick="video_request()">watch it!</button><br>
+        Links:
+        <a href="/delete_videos">Delete Vídeos</a><br>
+        <a href="/video_list">Video List</a><br>
+        <a href="/video">Last Video</a><br>
+        Coloque o id do seu vídeo e assita-o!
+        <input type="text" id="video_id">
+        <button onclick="window.location.href = `/static?path=videos/${document.getElementById('video_id').value}.mp4`">Confirm</button>
+    </body>
+</html>
